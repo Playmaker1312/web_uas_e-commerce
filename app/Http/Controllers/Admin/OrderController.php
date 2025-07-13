@@ -62,6 +62,25 @@ class OrderController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $order = ZakiOrder::find($id);
+        if (!$order) {
+            return redirect()->route('orders.index')->with('error', 'Order tidak ditemukan!');
+        }
+        $order->delete();
+        return redirect()->route('orders.index')->with('success', 'Order berhasil dihapus!');
+    }
+
+    /**
+     * Confirm the specified order (set status to 'proses').
+     */
+    public function confirm($id)
+    {
+        $order = ZakiOrder::find($id);
+        if (!$order) {
+            return redirect()->route('orders.index')->with('error', 'Order tidak ditemukan!');
+        }
+        $order->status = 'proses';
+        $order->save();
+        return redirect()->route('orders.index')->with('success', 'Order berhasil dikonfirmasi!');
     }
 }

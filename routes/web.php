@@ -100,6 +100,7 @@ Route::middleware(['role:admin'])->prefix('admin')->group(function () {
     Route::resource('products', ProductController::class);
     Route::resource('categories', CategoryController::class);
     Route::resource('orders', OrderController::class);
+    Route::post('orders/{order}/confirm', [OrderController::class, 'confirm'])->name('orders.confirm');
 });
 
 Route::get('/products', function (\Illuminate\Http\Request $request) {
